@@ -36,6 +36,10 @@ namespace Gagoya
             }
             return "Gagoya";
         }
+        static void WriteTransaction(DateTime time, string userChoice, decimal servicePrice)
+        {
+            File.AppendAllText("./transactions.txt", $"\n{time}, {userChoice}, {servicePrice}");
+        }
         static decimal GetPriceOfService(Dictionary<string, Dictionary<string, Dog>> menu, string usersService)
         {
             foreach (var service in menu)
@@ -58,6 +62,8 @@ namespace Gagoya
             decimal priceOfService = GetPriceOfService(menu, usersService);
             Console.WriteLine($"Total: ${priceOfService}.");
             Console.WriteLine("Come back in about 20 minutes.");
+            DateTime time = DateTime.Now;
+            WriteTransaction(time, usersService, priceOfService);
         }
     }
 }
